@@ -54,11 +54,15 @@ class AccesspointController extends Controller
 	public function create(Request $request)
 	{
 		Accesspoint::validator( $request->all() );
-		$accesspoint = Accesspoint::create( $request->all() );
-		return view('accesspoint.update',[
-			'result'	=>	$this->result['created'],
-			'accesspoint'	=>	Accesspoint::findOrFail( $accesspoint->id ),
-		]);
+		if( !Accesspoint::find($request->id) ){
+			$accesspoint = Accesspoint::create( $request->all() );
+			return view('accesspoint.update',[
+				'result'	=>	$this->result['created'],
+				'accesspoint'	=>	Accesspoint::findOrFail( $accesspoint->id ),
+			]);
+		}else{
+			return view('errors/403');
+		}
 	}
 
 	public function update(Request $request)

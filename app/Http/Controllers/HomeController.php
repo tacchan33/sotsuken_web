@@ -24,7 +24,6 @@ class HomeController extends Controller
 	}
 
 	public function test(){
-		/*int[] $diff = new int[WIFIBEACON_MAX];
 
 		for( $i=0; $i<WIFIBEACON_MAX; $i++){
 			$diff[$i] = null;
@@ -34,13 +33,13 @@ class HomeController extends Controller
 							->groupBy('accesspoint_id')
 							->get();
 
-		foreach($wifibeacons[0] as $wifibeacon[0]){
+		/*foreach($wifibeacons[] as $wifibeacon[]){
 			foreach($scanlogs as $scanlog){
 				if($scanlog->accesspoint_id == $wifibeacon[0]->accesspoint_id){
 					$diff[0] = $scanlog->average - $wifibeacon[0]->received_power;
-				}else if($accesspoint->id == $wifibeacon[1]->accesspoint_id){
+				}else if($scanlog->accesspoint_id == $wifibeacon[1]->accesspoint_id){
 					$diff[1] = $scanlog->average - $wifibeacon[1]->received_power;
-				}else if($accesspoint->id == $wifibeacon[2]->accesspoint_id){
+				}else if($scanlog->accesspoint_id == $wifibeacon[2]->accesspoint_id){
 					$diff[2] = $scanlog->average - $wifibeacon[2]->received_power;
 				}
 			}
@@ -51,8 +50,8 @@ class HomeController extends Controller
 					}
 				}
 			}
-		}
+		}*/
 
-		dd($wifibeacons);*/
+		dd($wifibeacons);
 	}
 }
