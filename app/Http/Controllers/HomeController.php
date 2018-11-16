@@ -26,7 +26,7 @@ class HomeController extends Controller
 
 	public function form(Request $request)
 	{
-		if( $request->action=='update' && User::findOrFail( $request->id ) ){
+		if( $request->action=='update' && User::findOrFail($request->id) && Wifibeacon::where('user_id','=',$request->id)->first() ){
 			$wifibeacons = Wifibeacon::where('user_id','=',$request->id)->get();
 			$scanlogs = Scanlog::select( DB::raw("accesspoint_id , COUNT(accesspoint_id) as count, AVG(received_power) as average ") )
 										->groupBy('accesspoint_id')

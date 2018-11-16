@@ -9,36 +9,23 @@
 
 		<table class="col-md-12">
 			<tr>
-				<th>ユーザ</th>
-				<th>建物</th>
-				<th>階数</th>
-				<th>部屋</th>
-				<th>dBm</th>
+				<th>名前</th>
+				<th></th>
 			</tr>
 			@foreach( $users as $user )
-				@if( isset($user->wifibeacon->accesspoint_id1) && isset($user->wifibeacon->accesspoint_id2) && isset($user->wifibeacon->accesspoint_id3) )
-					<tr>
-						<td>{{ $user->lastname."さん" }}</td>
-						<td>{{ $user->wifibeacon->accesspoint1->building }}</td>
-						<td>{{ $user->wifibeacon->accesspoint1->floor }}</td>
-						<td>{{ $user->wifibeacon->accesspoint1->room }}</td>
-						<td>{{ $user->wifibeacon->level1 }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>{{ $user->wifibeacon->accesspoint2->building }}</td>
-						<td>{{ $user->wifibeacon->accesspoint2->floor }}</td>
-						<td>{{ $user->wifibeacon->accesspoint2->room }}</td>
-						<td>{{ $user->wifibeacon->level2 }}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>{{ $user->wifibeacon->accesspoint3->building }}</td>
-						<td>{{ $user->wifibeacon->accesspoint3->floor }}</td>
-						<td>{{ $user->wifibeacon->accesspoint3->room }}</td>
-						<td>{{ $user->wifibeacon->level3 }}</td>
-					</tr>
-				@endif
+				<tr>
+					<td>{{ $user->lastname.' '.$user->firstname }}</td>
+					<td class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+							メニュー <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="{{ route('member.form',[ 'action'=>'update' , 'id'=>$user->id ]) }}">表示変更</a>
+							</li>
+						</ul>
+					</td>
+				</tr>
 			@endforeach
 		</table>
 
