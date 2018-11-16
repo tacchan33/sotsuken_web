@@ -18,6 +18,7 @@ Route::redirect('/','/home',301);
 
 //ホーム
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/form','HomeController@form')->name('member.form');
 
 /* 個人設定 */
 Route::get('/account','AccountController@index')->name('account.index');
@@ -38,5 +39,3 @@ Route::match(['get','put','post'],'/wifibeacon/update','WifibeaconController@upd
 
 /* ScanLog */
 Route::get('/scanlog/index','ScanlogController@index')->name('scanlog.index');
-
-Route::get('/test','HomeController@test');
