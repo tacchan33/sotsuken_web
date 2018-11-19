@@ -37,7 +37,7 @@ class Accesspoint extends Model
 		return Validator::make($data, [
 			'id'			=>	'required|sometimes|string|min:17|max:17',
 			'transmit_power'=>	'required|sometimes|numeric',
-			'essid'			=>	'sometimes|max:32',
+			//'essid'			=>	'sometimes|max:32',
 			'building'		=>	'required|sometimes|string|max:20',
 			'floor'			=>	'required|sometimes|numeric|min:-128|max:127',
 			'room'			=>	'required|sometimes|string|max:20',

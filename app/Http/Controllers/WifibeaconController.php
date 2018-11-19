@@ -47,7 +47,7 @@ class WifibeaconController extends Controller
 					Accesspoint::create([
 						'id'				=>	$request->accesspoint_id[$i],
 						'transmit_power'	=>	'0',
-						'essid'				=>	'不明',
+						'essid'				=>	$request->essid[$i],
 						'building'			=>	'不明',
 						'floor'				=>	'0',
 						'room'				=>	'不明',
