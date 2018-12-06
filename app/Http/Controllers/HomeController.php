@@ -52,6 +52,7 @@ class HomeController extends Controller
 			$wifibeacon = Wifibeacon::where('user_id','=',$request->id)->where('sequence','=',$bestSequence)->first();
 			return view('member.update',[
 				'user'			=>	User::find($request->id),
+				'wifibeacon'	=>	$wifibeacon,
 				'accesspoint'	=>	Accesspoint::find($wifibeacon->accesspoint_id),
 				]);
 		}else{

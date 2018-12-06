@@ -18,6 +18,10 @@
 			{{ csrf_field() }}
 
 			<div class="form-group">
+				<p class="col-md-12" style='text-align:right;'>最終更新日時：{{ $wifibeacon->updated_at }}</p>
+			</div>
+
+			<div class="form-group">
 				<label class="col-md-4 control-label">姓</label>
 				<div class="col-md-6">
 					<input type="text" class="form-control" value="{{ $user->lastname }}" readonly>
@@ -31,24 +35,19 @@
 				</div>
 			</div>
 
-			<div class="form-group">
-				<label class="col-md-4 control-label">建物名</label>
-				<div class="col-md-6">
-					<input type="text" class="form-control" value="{{ $accesspoint->building }}" readonly>
-				</div>
-			</div>
-
 		</form>
 
 		<table class="col-md-12">
 			<tr>
 				<th>BSSID</th>
+				<th>ESSID</th>
 				<th>建物名</th>
 				<th>階数</th>
 				<th>部屋名</th>
 			</tr>
 			<tr>
 				<td>{{ $accesspoint->id }}</td>
+				<td>{{ $accesspoint->essid }}</td>
 				<td>{{ $accesspoint->building }}</td>
 				<td>{{ $accesspoint->floor }}</td>
 				<td>{{ $accesspoint->room }}</td>

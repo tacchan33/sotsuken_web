@@ -26,6 +26,9 @@ class WifibeaconController extends Controller
 		'danger' =>	[
 			'color'	=>	'danger',
 			'message'	=> '失敗しました。'],
+		'verify' =>	[
+			'color'	=>	'success',
+			'message'	=> '認証成功'],
 		'notVerify' =>	[
 			'color'	=>	'danger',
 			'message'	=> 'メールアドレスまたはパスワードが一致しません。'],
@@ -40,7 +43,8 @@ class WifibeaconController extends Controller
 	}
 
 	public function update(Request $request){
-		Wifibeacon::validator($request->All());
+
+		/* accesspointテーブルに存在しないBSSIDを持つAPを追加する */
 		for( $i=0; $i<WIFIBEACON_MAX; $i++){
 			if( !empty($request->accesspoint_id[$i]) ){
 				if( !Accesspoint::find( $request->accesspoint_id[$i]) ){
@@ -56,6 +60,7 @@ class WifibeaconController extends Controller
 			}
 		}
 
+		/* scanlogテーブルに一番電波強度のあるビーコンをログに残す */
 		if( !empty($request->accesspoint_id[0]) && !empty($request->received_power[0]) ){
 			Scanlog::create([
 				'accesspoint_id'	=>	$request->accesspoint_id[0],
@@ -63,47 +68,52 @@ class WifibeaconController extends Controller
 				]);
 		}
 
+		/* 認証後、wifibeaconテーブルにビーコンを挿入する */
 		$user = User::where( 'email' , '=' , $request->input('email') )->first();
 		if( $user != null && password_verify($request->input('password'),$user->password) ){
 			if( password_verify($request->input('device_token'),$user->device_token) ){
-				$time = date('Y/m/d G:i:s');
-				for( $i=0; $i<WIFIBEACON_MAX ; $i++){
+				if($request->input('update')){
+					$time = date('Y/m/d G:i:s');
+					for( $i=0; $i<WIFIBEACON_MAX ; $i++){
 
-					$wifibeacon = Wifibeacon::where( 'user_id' , '=' , $user->id )
+						$wifibeacon = Wifibeacon::where( 'user_id' , '=' , $user->id )
+												->where( 'sequence' , '=' , $i )
+												->first();
+
+						if( !empty($request->accesspoint_id[$i]) && !empty($request->received_power[$i]) ){
+							if( $wifibeacon != null ){
+								Wifibeacon::where( 'user_id' , '=' , $user->id )
 											->where( 'sequence' , '=' , $i )
-											->first();
-
-					if( isset($request->accesspoint_id[$i]) ){
-						if( $wifibeacon != null ){
+											->update([
+												'updated_at'		=>	$time,
+												'accesspoint_id'	=>	$request->accesspoint_id[$i],
+												'received_power'	=>	$request->received_power[$i],
+												]);
+							}else{
+								Wifibeacon::create([
+									'user_id'			=>	$user->id,
+									'sequence'			=>	$i,
+									'updated_at'		=>	$time,
+									'accesspoint_id'	=>	$request->accesspoint_id[$i],
+									'received_power'	=>	$request->received_power[$i],
+									]);
+							}
+						}else if( $wifibeacon != null ){
 							Wifibeacon::where( 'user_id' , '=' , $user->id )
 										->where( 'sequence' , '=' , $i )
-										->update([
-											'updated_at'		=>	$time,
-											'accesspoint_id'	=>	$request->accesspoint_id[$i],
-											'received_power'	=>	$request->received_power[$i],
-											]);
-						}else{
-							Wifibeacon::create([
-								'user_id'			=>	$user->id,
-								'sequence'			=>	$i,
-								'updated_at'		=>	$time,
-								'accesspoint_id'	=>	$request->accesspoint_id[$i],
-								'received_power'	=>	$request->received_power[$i],
-								]);
+										->delete();
 						}
-					}else if( $wifibeacon != null ){
-						Wifibeacon::where( 'user_id' , '=' , $user->id )
-									->where( 'sequence' , '=' , $i )
-									->delete();
 					}
-				}
 
-				$result = $this->result['updated'];
+					$result = $this->result['updated'];
+				}else{
+					$result = $this->result['verify'];
+				}
 			}else{
-				$result = $this->result['notToken'];
+				return response()->view( 'wifibeacon.update' ,[ 'result'=>$this->result['notToken'] ], 400 );
 			}
 		}else{
-			$result = $this->result['notVerify'];
+			return response()->view( 'wifibeacon.update' ,[ 'result'=>$this->result['notVerify'] ], 400 );
 		}
 
 		return view('wifibeacon.update', [

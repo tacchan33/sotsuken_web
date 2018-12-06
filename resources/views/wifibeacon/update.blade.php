@@ -18,6 +18,9 @@
 
 	    <form class="form-horizontal" method="POST" action="{{ route('wifibeacon.update') }}">
 			<input name="_method" type="hidden" value="PUT">
+
+			<input type="hidden" name="update" value="true">
+
 			<div class="form-group{{ $errors->has('email') ? 'has-error' : '' }}">
 				<label for="email" class="col-md-4 control-label">メールアドレス</label>
 				<div class="col-md-6">

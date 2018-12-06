@@ -30,7 +30,7 @@ class AccesspointController extends Controller
 	public function index()
 	{
 		return view('accesspoint.index',[
-			'accesspoints'	=>	Accesspoint::all()
+			'accesspoints'	=>	Accesspoint::orderBy('floor','asc')->get()
 		]);
 	}
 

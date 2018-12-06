@@ -22,7 +22,7 @@
 		<table class="table form-group">
 			<tr>
 				<th>BSSID</th>
-				<th>送信電力</th>
+				<th>ESSID</th>
 				<th>建物名</th>
 				<th>階数</th>
 				<th>部屋</th>
@@ -32,7 +32,7 @@
 			@foreach ($accesspoints as $accesspoint)
 				<tr>
 					<td>{{ $accesspoint->id }}</td>
-					<td>{{ $accesspoint->transmit_power }}</td>
+					<td>{{ $accesspoint->essid }}</td>
 					<td>{{ $accesspoint->building }}</td>
 					<td>{{ $accesspoint->floor }}</td>
 					<td>{{ $accesspoint->room }}</td>

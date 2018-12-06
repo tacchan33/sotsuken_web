@@ -34,10 +34,8 @@ class Wifibeacon extends Model
 	public static function validator(array $data)
 	{
 		return Validator::make($data, [
-			'user_id'			=>	'required|sometimes|numeric',
-			'sequence'			=>	'required|sometimes|numeric',
-			'accesspoint_id.*'	=>	'nullable|string|min:17|max:17',
-			'received_power.*'	=>	'nullable|numeric|max:0',
+			'accesspoint_id'	=>	'nullable|string|min:17|max:17',
+			'received_power'	=>	'nullable|numeric|max:0',
 		 ])->validate();
 	}
 

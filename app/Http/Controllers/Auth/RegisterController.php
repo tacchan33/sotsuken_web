@@ -71,10 +71,6 @@ class RegisterController extends Controller
 			'password' => bcrypt($data['password']),
         ]);
 
-        Wifibeacon::create([
-            'user_id'  =>  $user->id,
-        ]);
-
         return $user;
     }
 }
