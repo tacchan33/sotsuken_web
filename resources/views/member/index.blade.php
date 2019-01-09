@@ -3,7 +3,7 @@
 @section('content')
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h2 class="panel-title">Dashboard</h2>
+		<h2 class="panel-title">メンバー</h2>
 	</div>
 	<div class="panel-body">
 
@@ -21,7 +21,7 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li>
-								<a href="{{ route('member.form',[ 'action'=>'update' , 'id'=>$user->id ]) }}">表示変更</a>
+								<a href="{{ route('member.form',[ 'action'=>'update' , 'id'=>$user->id ]) }}">表示</a>
 							</li>
 						</ul>
 					</td>
